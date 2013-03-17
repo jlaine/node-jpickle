@@ -9,9 +9,10 @@
     "type": "git",
     "url": "git://github.com/jlaine/node-jpickle.git"
   },
-  "keywords": {
-    "pickle"
-  },
+  "keywords": [
+    "pickle",
+    "python"
+  ],
   "directories": {
     "lib": "lib"
   },
