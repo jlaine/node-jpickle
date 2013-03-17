@@ -14,6 +14,10 @@ assert.equal(jpickle.loads('F3.14159\n.'), 3.14159);
 assert.equal(jpickle.loads("S'foo'\np0\n."), 'foo');
 assert.equal(jpickle.loads("S\"foo\"\np0\n."), 'foo');
 
+// LIST
+assert.deepEqual(jpickle.loads('(lp0\n.'), []);
+assert.deepEqual(jpickle.loads('(lp1\nI1\naI2\naI3\na.'), [1, 2, 3]);
+
 // DICT
 assert.deepEqual(jpickle.loads('(dp0\n.'), {});
 assert.deepEqual(jpickle.loads("(dp0\nS'foo'\np1\nS'bar'\np2\ns."), {foo: 'bar'});
