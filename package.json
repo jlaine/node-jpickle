@@ -1,0 +1,14 @@
+{
+  "name": "jpickle",
+  "description": "Simple full-javascript pickle deserializer",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jlaine/node-jpickle.git"
+  },
+  "author": "Jeremy Lainé",
+  "main": "./lib/jpickle",
+  "directories": {
+    "lib": "lib"
+  },
+}
