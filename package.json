@@ -5,6 +5,9 @@
   "license": "MIT",
   "author": "Jeremy Lainé",
   "main": "./lib/jpickle",
+  "scripts": {
+    "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/jlaine/node-jpickle.git"
@@ -15,6 +18,9 @@
   ],
   "directories": {
     "lib": "lib"
+  },
+  "devDependencies": {
+    "mocha": "1.x.x"
   },
   "engines": {
     "node": "*"
