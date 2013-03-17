@@ -11,4 +11,7 @@
   "directories": {
     "lib": "lib"
   },
+  "engines": {
+    "node": "*"
+  }
 }
