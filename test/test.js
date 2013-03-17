@@ -16,6 +16,7 @@ assert.equal(jpickle.loads("S\"foo\"\np0\n."), 'foo');
 
 // LIST
 assert.deepEqual(jpickle.loads('(lp0\n.'), []);
+assert.deepEqual(jpickle.loads('(lp0\nI1\na.'), [1]);
 assert.deepEqual(jpickle.loads('(lp1\nI1\naI2\naI3\na.'), [1, 2, 3]);
 
 // DICT
@@ -42,8 +43,17 @@ assert.equal(jpickle.loads('T\x00\x01\x00\x00xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // SHORT_BINSTRING
 assert.equal(jpickle.loads('U\x03fooq\x00.'), 'foo');
 
+// EMPTY_LIST
+assert.deepEqual(jpickle.loads(']q\x00.'), []);
+
+// EMPTY_LIST, BINPUT .. APPEND
+assert.deepEqual(jpickle.loads(']q\x00K\x01a.'), [1]);
+
+// EMPTY_LIST, BINPUT, MARK .. APPENDS
+assert.deepEqual(jpickle.loads(']q\x00(K\x01K\x02K\x03e.'), [1, 2, 3]);
+
 // EMPTY_DICT
 assert.deepEqual(jpickle.loads('}q\x00.'), {});
 
-// SETITEMS
+// EMPTY_DICT, BINPUT, MARK .. SETITEM
 assert.deepEqual(jpickle.loads('}q\x00U\x03fooq\x01U\x03barq\x02s.'), {foo: 'bar'});
