@@ -7,6 +7,9 @@ var assert = require('assert')
 assert.equal(jpickle.loads('I1\n.'), 1);
 assert.equal(jpickle.loads('I12\n.'), 12);
 
+// FLOAT
+assert.equal(jpickle.loads('F3.14159\n.'), 3.14159);
+
 // STRING
 assert.equal(jpickle.loads("S'foo'\np0\n."), 'foo');
 assert.equal(jpickle.loads("S\"foo\"\np0\n."), 'foo');
@@ -25,6 +28,9 @@ assert.equal(jpickle.loads('M\x00\x01.'), 256);
 
 // BININT4
 assert.equal(jpickle.loads('J\x00\x00\x01\x00.'), 65536);
+
+// BINFLOAT
+assert.equal(jpickle.loads('G@\t!\xf9\xf0\x1b\x86n.'), 3.14159);
 
 // BINSTRING
 assert.equal(jpickle.loads('T\x00\x01\x00\x00xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxq\x00.'), 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
