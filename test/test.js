@@ -20,6 +20,13 @@ describe('pickle version 0', function() {
         assert.equal(jpickle.loads('VTest\xe9\np0\n.'), 'Testé');
     });
 
+    it('should decode tuples', function() {
+        assert.deepEqual(jpickle.loads("(t."), []);
+        assert.deepEqual(jpickle.loads("(S'foo'\np0\ntp1\n."), ['foo']);
+        assert.deepEqual(jpickle.loads("(S'foo'\np0\nS'bar'\np1\ntp2\n."), ['foo', 'bar']);
+        assert.deepEqual(jpickle.loads("(S'foo'\np0\nS'bar'\np1\nS'wiz'\np2\ntp3\n."), ['foo', 'bar', 'wiz']);
+    });
+
     it('should decode lists', function() {
         assert.deepEqual(jpickle.loads('(lp0\n.'), []);
         assert.deepEqual(jpickle.loads('(lp0\nI1\na.'), [1]);
@@ -64,6 +71,13 @@ describe('pickle version 1', function() {
 
     it('should decode BINUNICODE', function() {
         assert.equal(jpickle.loads('X\x06\x00\x00\x00Test\xc3\xa9q\x00.'), 'Testé');
+    });
+
+    it('should decode TUPLE', function() {
+        assert.deepEqual(jpickle.loads(').'), []);
+        assert.deepEqual(jpickle.loads('(U\x03fooq\x00tq\x01.'), ['foo']);
+        assert.deepEqual(jpickle.loads('(U\x03fooq\x00U\x03barq\x01tq\x02.'), ['foo', 'bar']);
+        assert.deepEqual(jpickle.loads('(U\x03fooq\x00U\x03barq\x01U\x03wizq\x02tq\x03.'), ['foo', 'bar', 'wiz']);
     });
 
     it('should decode EMPTY_LIST', function() {
