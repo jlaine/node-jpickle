@@ -73,7 +73,7 @@ describe('pickle version 1', function() {
         assert.equal(jpickle.loads('X\x06\x00\x00\x00Test\xc3\xa9q\x00.'), 'Testé');
     });
 
-    it('should decode TUPLE', function() {
+    it('should decode tuples', function() {
         assert.deepEqual(jpickle.loads(').'), []);
         assert.deepEqual(jpickle.loads('(U\x03fooq\x00tq\x01.'), ['foo']);
         assert.deepEqual(jpickle.loads('(U\x03fooq\x00U\x03barq\x01tq\x02.'), ['foo', 'bar']);
@@ -98,5 +98,15 @@ describe('pickle version 1', function() {
 
     it('should decode EMPTY_DICT, BINPUT, MARK .. SETITEM', function() {
         assert.deepEqual(jpickle.loads('}q\x00U\x03fooq\x01U\x03barq\x02s.'), {foo: 'bar'});
+    });
+});
+
+describe('pickle version 2', function() {
+    it('should decode tuples', function() {
+        assert.deepEqual(jpickle.loads('\x80\x02).'), []);
+        assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00\x85q\x01.'), ['foo']);
+        assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00U\x03barq\x01\x86q\x02.'), ['foo', 'bar']);
+        assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00U\x03barq\x01U\x03wizq\x02\x87q\x03.'), ['foo', 'bar', 'wiz']);
+        assert.deepEqual(jpickle.loads('\x80\x02(U\x03fooq\x00U\x03barq\x01U\x03wizq\x02U\x04bangq\x03tq\x04.'), ['foo', 'bar', 'wiz', 'bang']);
     });
 });
