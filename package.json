@@ -1,7 +1,7 @@
 {
   "name": "jpickle",
-  "description": "Simple full-javascript pickle parser",
-  "version": "0.2.5",
+  "description": "Full-javascript parser for Python's pickle format",
+  "version": "0.3.0",
   "license": "MIT",
   "author": "Jeremy Lainé",
   "main": "./lib/jpickle",

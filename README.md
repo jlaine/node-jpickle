@@ -1,7 +1,7 @@
 node-jpickle
 ============
 
-Simple full-javascript parser for Python's pickle format.
+Full-javascript parser for Python's pickle format.
 
 It currently supports most opcodes for:
 
