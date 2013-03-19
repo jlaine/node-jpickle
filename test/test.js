@@ -3,21 +3,21 @@ var assert = require('assert')
 
 describe('pickle version 0', function() {
     it('should decode integers', function() {
-        assert.equal(jpickle.loads('I1\n.'), 1);
-        assert.equal(jpickle.loads('I12\n.'), 12);
+        assert.strictEqual(jpickle.loads('I1\n.'), 1);
+        assert.strictEqual(jpickle.loads('I12\n.'), 12);
     });
 
     it('should decode floats', function() {
-        assert.equal(jpickle.loads('F3.14159\n.'), 3.14159);
+        assert.strictEqual(jpickle.loads('F3.14159\n.'), 3.14159);
     });
 
     it('should decode strings', function() {
-        assert.equal(jpickle.loads("S'foo'\np0\n."), 'foo');
-        assert.equal(jpickle.loads("S\"foo\"\np0\n."), 'foo');
+        assert.strictEqual(jpickle.loads("S'foo'\np0\n."), 'foo');
+        assert.strictEqual(jpickle.loads("S\"foo\"\np0\n."), 'foo');
     });
 
     it('should decode unicode', function() {
-        assert.equal(jpickle.loads('VTest\xe9\np0\n.'), 'Testé');
+        assert.strictEqual(jpickle.loads('VTest\xe9\np0\n.'), 'Testé');
     });
 
     it('should decode tuples', function() {
@@ -41,36 +41,36 @@ describe('pickle version 0', function() {
 
 describe('pickle version 1', function() {
     it('should decode BININT', function() {
-        assert.equal(jpickle.loads('I1\n.'), 1);
-        assert.equal(jpickle.loads('I12\n.'), 12);
+        assert.strictEqual(jpickle.loads('I1\n.'), 1);
+        assert.strictEqual(jpickle.loads('I12\n.'), 12);
     });
 
     it('should decode BININT1', function() {
-        assert.equal(jpickle.loads('K\x01.'), 1);
+        assert.strictEqual(jpickle.loads('K\x01.'), 1);
     });
 
     it('should decode BININT2', function() {
-        assert.equal(jpickle.loads('M\x00\x01.'), 256);
+        assert.strictEqual(jpickle.loads('M\x00\x01.'), 256);
     });
 
     it('should decode BININT4', function() {
-        assert.equal(jpickle.loads('J\x00\x00\x01\x00.'), 65536);
+        assert.strictEqual(jpickle.loads('J\x00\x00\x01\x00.'), 65536);
     });
 
     it('should decode BINFLOAT', function() {
-        assert.equal(jpickle.loads('G@\t!\xf9\xf0\x1b\x86n.'), 3.14159);
+        assert.strictEqual(jpickle.loads('G@\t!\xf9\xf0\x1b\x86n.'), 3.14159);
     });
 
     it('should decode BINSTRING', function() {
-        assert.equal(jpickle.loads('T\x00\x01\x00\x00xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxq\x00.'), 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+        assert.strictEqual(jpickle.loads('T\x00\x01\x00\x00xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxq\x00.'), 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     });
 
     it('should decode SHORT_BINSTRING', function() {
-        assert.equal(jpickle.loads('U\x03fooq\x00.'), 'foo');
+        assert.strictEqual(jpickle.loads('U\x03fooq\x00.'), 'foo');
     });
 
     it('should decode BINUNICODE', function() {
-        assert.equal(jpickle.loads('X\x06\x00\x00\x00Test\xc3\xa9q\x00.'), 'Testé');
+        assert.strictEqual(jpickle.loads('X\x06\x00\x00\x00Test\xc3\xa9q\x00.'), 'Testé');
     });
 
     it('should decode tuples', function() {
