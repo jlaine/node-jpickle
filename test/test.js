@@ -116,4 +116,8 @@ describe('pickle version 2', function() {
         assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00U\x03barq\x01U\x03wizq\x02\x87q\x03.'), ['foo', 'bar', 'wiz']);
         assert.deepEqual(jpickle.loads('\x80\x02(U\x03fooq\x00U\x03barq\x01U\x03wizq\x02U\x04bangq\x03tq\x04.'), ['foo', 'bar', 'wiz', 'bang']);
     });
+
+    it('should decode datetimes', function() {
+        assert.equal(jpickle.loads('\x80\x02cdatetime\ndatetime\nq\x00U\n\x07\xdd\x03\x12\x17\x014\x04\xc0\x0bq\x01\x85q\x02Rq\x03.').toISOString(), "2013-03-18T22:01:52.311Z");
+    });
 });
