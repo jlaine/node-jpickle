@@ -41,6 +41,7 @@ describe('pickle version 0', function() {
     it('should decode dicts', function() {
         assert.deepEqual(jpickle.loads('(dp0\n.'), {});
         assert.deepEqual(jpickle.loads("(dp0\nS'foo'\np1\nS'bar'\np2\ns."), {foo: 'bar'});
+        assert.deepEqual(jpickle.loads("(dp0\nS'foo'\np1\nS'bar'\np2\nsS'wiz'\np3\nS'bang'\np4\ns."), {foo: 'bar', wiz: 'bang'});
     });
 });
 
@@ -93,12 +94,10 @@ describe('pickle version 1', function() {
         assert.deepEqual(jpickle.loads(']q\x00(K\x01K\x02K\x03e.'), [1, 2, 3]);
     });
 
-    it('should decode EMPTY_DICT', function() {
+    it('should decode dicts', function() {
         assert.deepEqual(jpickle.loads('}q\x00.'), {});
-    });
-
-    it('should decode EMPTY_DICT, BINPUT, MARK .. SETITEM', function() {
         assert.deepEqual(jpickle.loads('}q\x00U\x03fooq\x01U\x03barq\x02s.'), {foo: 'bar'});
+        assert.deepEqual(jpickle.loads('}q\x00(U\x03fooq\x01U\x03barq\x02U\x03wizq\x03U\x04bangq\x04u.'), {foo: 'bar', wiz: 'bang'});
     });
 });
 
