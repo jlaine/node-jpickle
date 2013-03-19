@@ -3,7 +3,11 @@ node-jpickle
 
 Simple full-javascript parser for Python's pickle format.
 
-It currently supports most protocol 0 and protocol 1 opcodes.
+It currently supports most opcodes for:
+
+ - protocol 0
+ - protocol 1
+ - protocol 2
 
 Installation
 ------------

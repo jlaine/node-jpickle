@@ -95,6 +95,11 @@ describe('pickle version 1', function() {
 });
 
 describe('pickle version 2', function() {
+    it('should decode booleans', function() {
+        assert.strictEqual(jpickle.loads('\x80\x02\x89.'), false);
+        assert.strictEqual(jpickle.loads('\x80\x02\x88.'), true);
+    });
+
     it('should decode tuples', function() {
         assert.deepEqual(jpickle.loads('\x80\x02).'), []);
         assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00\x85q\x01.'), ['foo']);
