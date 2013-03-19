@@ -16,6 +16,7 @@ describe('pickle version 0', function() {
 
     it('should decode floats', function() {
         assert.strictEqual(jpickle.loads('F3.14159\n.'), 3.14159);
+        assert.strictEqual(jpickle.loads('F-3.14159\n.'), -3.14159);
     });
 
     it('should decode strings', function() {
@@ -23,7 +24,7 @@ describe('pickle version 0', function() {
         assert.strictEqual(jpickle.loads("S\"foo\"\np0\n."), 'foo');
     });
 
-    it('should decode unicode', function() {
+    it('should decode unicodes', function() {
         assert.strictEqual(jpickle.loads('VTest\xe9\np0\n.'), 'Testé');
     });
 
@@ -58,19 +59,21 @@ describe('pickle version 1', function() {
         assert.strictEqual(jpickle.loads('J\xff\xff\xff\xff.'), -1);
     });
 
-    it('should decode BINFLOAT', function() {
+    it('should decode floats', function() {
+        // BINFLOAT
         assert.strictEqual(jpickle.loads('G@\t!\xf9\xf0\x1b\x86n.'), 3.14159);
+        assert.strictEqual(jpickle.loads('G\xc0\t!\xf9\xf0\x1b\x86n.'), -3.14159);
     });
 
-    it('should decode BINSTRING', function() {
+    it('should decode strings', function() {
+        // BINSTRING
         assert.strictEqual(jpickle.loads('T\x00\x01\x00\x00xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxq\x00.'), 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    });
-
-    it('should decode SHORT_BINSTRING', function() {
+        // SHORT_BINSTRING
         assert.strictEqual(jpickle.loads('U\x03fooq\x00.'), 'foo');
     });
 
-    it('should decode BINUNICODE', function() {
+    it('should decode unicodes', function() {
+        // BINUNICODE
         assert.strictEqual(jpickle.loads('X\x06\x00\x00\x00Test\xc3\xa9q\x00.'), 'Testé');
     });
 
