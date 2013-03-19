@@ -45,11 +45,6 @@ describe('pickle version 0', function() {
 });
 
 describe('pickle version 1', function() {
-    it('should decode BININT', function() {
-        assert.strictEqual(jpickle.loads('I1\n.'), 1);
-        assert.strictEqual(jpickle.loads('I12\n.'), 12);
-    });
-
     it('should decode BININT1', function() {
         assert.strictEqual(jpickle.loads('K\x01.'), 1);
     });
@@ -58,7 +53,8 @@ describe('pickle version 1', function() {
         assert.strictEqual(jpickle.loads('M\x00\x01.'), 256);
     });
 
-    it('should decode BININT4', function() {
+    it('should decode BININT', function() {
+        assert.strictEqual(jpickle.loads('J\xff\xff\xff\xff.'), -1);
         assert.strictEqual(jpickle.loads('J\x00\x00\x01\x00.'), 65536);
     });
 
