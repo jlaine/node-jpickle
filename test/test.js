@@ -119,5 +119,6 @@ describe('pickle version 2', function() {
 
     it('should decode datetimes', function() {
         assert.equal(jpickle.loads('\x80\x02cdatetime\ndatetime\nq\x00U\n\x07\xdd\x03\x12\x17\x014\x04\xc0\x0bq\x01\x85q\x02Rq\x03.').toISOString(), "2013-03-18T22:01:52.311Z");
+        assert.equal(jpickle.loads('\x80\x02cdatetime\ndatetime\nq\x00U\n\x07\xdd\x03\x12\x16\x014\x04\xc0\x0bq\x01cdjango.utils.timezone\nUTC\nq\x02)Rq\x03\x86q\x04Rq\x05.').toISOString(), "2013-03-18T22:01:52.311Z");
     });
 });
