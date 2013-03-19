@@ -7,6 +7,11 @@ describe('pickle version 0', function() {
         assert.strictEqual(jpickle.loads('I12\n.'), 12);
     });
 
+    it('should decode booleans', function() {
+        assert.strictEqual(jpickle.loads('I00\n.'), false);
+        assert.strictEqual(jpickle.loads('I01\n.'), true);
+    });
+
     it('should decode floats', function() {
         assert.strictEqual(jpickle.loads('F3.14159\n.'), 3.14159);
     });
