@@ -117,8 +117,24 @@ describe('pickle version 2', function() {
         assert.deepEqual(jpickle.loads('\x80\x02(U\x03fooq\x00U\x03barq\x01U\x03wizq\x02U\x04bangq\x03tq\x04.'), ['foo', 'bar', 'wiz', 'bang']);
     });
 
-    it('should decode datetimes', function() {
-        assert.equal(jpickle.loads('\x80\x02cdatetime\ndatetime\nq\x00U\n\x07\xdd\x03\x12\x17\x014\x04\xc0\x0bq\x01\x85q\x02Rq\x03.').toISOString(), "2013-03-18T22:01:52.311Z");
-        assert.equal(jpickle.loads('\x80\x02cdatetime\ndatetime\nq\x00U\n\x07\xdd\x03\x12\x16\x014\x04\xc0\x0bq\x01cdjango.utils.timezone\nUTC\nq\x02)Rq\x03\x86q\x04Rq\x05.').toISOString(), "2013-03-18T22:01:52.311Z");
+    it('should decode naive datetimes', function() {
+        var date = jpickle.loads('\x80\x02cdatetime\ndatetime\nq\x00U\n\x07\xdd\x03\x12\x17\x014\x04\xc0\x0bq\x01\x85q\x02Rq\x03.');
+        assert.strictEqual(date.getFullYear(), 2013);
+        assert.strictEqual(date.getMonth(), 2);
+        assert.strictEqual(date.getDate(), 18);
+        assert.strictEqual(date.getHours(), 23);
+        assert.strictEqual(date.getMinutes(), 1);
+        assert.strictEqual(date.getSeconds(), 52);
+        assert.strictEqual(date.getMilliseconds(), 311);
+    });
+    it('should decode aware datetimes', function() {
+        var date = jpickle.loads('\x80\x02cdatetime\ndatetime\nq\x00U\n\x07\xdd\x03\x12\x16\x014\x04\xc0\x0bq\x01cdjango.utils.timezone\nUTC\nq\x02)Rq\x03\x86q\x04Rq\x05.');
+        assert.strictEqual(date.getUTCFullYear(), 2013);
+        assert.strictEqual(date.getUTCMonth(), 2);
+        assert.strictEqual(date.getUTCDate(), 18);
+        assert.strictEqual(date.getUTCHours(), 22);
+        assert.strictEqual(date.getUTCMinutes(), 1);
+        assert.strictEqual(date.getUTCSeconds(), 52);
+        assert.strictEqual(date.getUTCMilliseconds(), 311);
     });
 });
