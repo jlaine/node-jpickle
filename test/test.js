@@ -4,7 +4,9 @@ var assert = require('assert')
 describe('pickle version 0', function() {
     it('should decode integers', function() {
         assert.strictEqual(jpickle.loads('I1\n.'), 1);
-        assert.strictEqual(jpickle.loads('I12\n.'), 12);
+        assert.strictEqual(jpickle.loads('I256\n.'), 256);
+        assert.strictEqual(jpickle.loads('I65536\n.'), 65536);
+        assert.strictEqual(jpickle.loads('I-1\n.'), -1);
     });
 
     it('should decode booleans', function() {
@@ -46,17 +48,14 @@ describe('pickle version 0', function() {
 });
 
 describe('pickle version 1', function() {
-    it('should decode BININT1', function() {
+    it('should decode integers', function() {
+        // BININT1
         assert.strictEqual(jpickle.loads('K\x01.'), 1);
-    });
-
-    it('should decode BININT2', function() {
+        // BININT2
         assert.strictEqual(jpickle.loads('M\x00\x01.'), 256);
-    });
-
-    it('should decode BININT', function() {
-        assert.strictEqual(jpickle.loads('J\xff\xff\xff\xff.'), -1);
+        // BININT
         assert.strictEqual(jpickle.loads('J\x00\x00\x01\x00.'), 65536);
+        assert.strictEqual(jpickle.loads('J\xff\xff\xff\xff.'), -1);
     });
 
     it('should decode BINFLOAT', function() {
@@ -82,15 +81,9 @@ describe('pickle version 1', function() {
         assert.deepEqual(jpickle.loads('(U\x03fooq\x00U\x03barq\x01U\x03wizq\x02tq\x03.'), ['foo', 'bar', 'wiz']);
     });
 
-    it('should decode EMPTY_LIST', function() {
+    it('should decode lists', function() {
         assert.deepEqual(jpickle.loads(']q\x00.'), []);
-    });
-
-    it('should decode EMPTY_LIST, BINPUT .. APPEND', function() {
         assert.deepEqual(jpickle.loads(']q\x00K\x01a.'), [1]);
-    });
-
-    it('should decode EMPTY_LIST, BINPUT, MARK .. APPENDS', function() {
         assert.deepEqual(jpickle.loads(']q\x00(K\x01K\x02K\x03e.'), [1, 2, 3]);
     });
 
