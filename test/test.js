@@ -19,6 +19,10 @@ describe('pickle version 0', function() {
         assert.strictEqual(jpickle.loads('F-3.14159\n.'), -3.14159);
     });
 
+    it('should decode longstrings', function() {
+        assert.strictEqual(jpickle.loads('L123123123123123123123123123123L\n.'), 123123123123123123123123123123);
+    });
+
     it('should decode strings', function() {
         assert.strictEqual(jpickle.loads("S'foo'\np0\n."), 'foo');
         assert.strictEqual(jpickle.loads("S\"foo\"\np0\n."), 'foo');
