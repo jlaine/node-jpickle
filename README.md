@@ -21,3 +21,15 @@ Here is a basic example for parsing a pickled string:
 
     var jpickle = require('jpickle');
     jpickle.loads('U\x0bhello worldq\x01.');
+
+Running Tests
+-------------
+
+Mocha is required for running tests, go in the tests directory and launch
+    mocha
+
+resulting in an output like this one
+    ․․․․․․․․․․․․․․․․․․․․․
+
+    21 passing (19 ms)
+
