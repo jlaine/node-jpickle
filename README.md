@@ -25,7 +25,8 @@ Here is a basic example for parsing a pickled string:
 Running Tests
 -------------
 
-Mocha is required for running tests, go in the tests directory and launch
+Mocha is required for running tests, go in the tests directory and launch:
+
     mocha
 
 resulting in an output like this one
