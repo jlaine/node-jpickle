@@ -1,6 +1,8 @@
 node-jpickle
 ============
 
+[![Build Status](https://travis-ci.org/jlaine/node-jpickle.png)](https://travis-ci.org/jlaine/node-jpickle)
+
 Full-javascript parser for Python's pickle format.
 
 It currently supports most opcodes for:
