@@ -2,6 +2,10 @@ var assert = require('assert')
   , jpickle = require('../lib/jpickle');
 
 describe('pickle version 0', function() {
+    it('should decode none', function() {
+        assert.strictEqual(jpickle.loads('N.'), null);
+    });
+
     it('should decode integers', function() {
         assert.strictEqual(jpickle.loads('I1\n.'), 1);
         assert.strictEqual(jpickle.loads('I256\n.'), 256);
