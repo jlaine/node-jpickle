@@ -146,3 +146,16 @@ describe('pickle version 2', function() {
         assert.strictEqual(date.getUTCMilliseconds(), 311);
     });
 });
+
+describe('complex example', function(){
+    it('should decode a complex example', function() {
+      var ltest="(dp1\nS'nick'\np2\nS'testuser'\np3\nsS'friends'\np4\n(lp5\n(dp6\nS'uid'\np7\nI2\nsS'name'\np8\nS'testuser2'\np9\nsa(dp10\ng7\nI3\nsg8\nS'testuser3'\np11\nsasg7\nI1\nsS'groups'\np12\n(lp13\n(dp14\nS'gid'\np15\nI1\nsg8\nS'wonderful group'\np16\nsas.";
+      var lref = {nick: 'testuser',
+            friends: [ { uid: 2, name: 'testuser2' }, { uid: 3, name: 'testuser3' } ],
+            uid: 1,
+            groups: [ { gid: 1, name: 'wonderful group' } ] };
+
+      //JSON.stringify takes care of not caring of the order of object members
+      assert.strictEqual(JSON.stringify(jpickle.loads(ltest)), JSON.stringify(lref));
+    });
+});
