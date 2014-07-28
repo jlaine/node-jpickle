@@ -54,6 +54,11 @@ describe('pickle version 0', function() {
         assert.deepEqual(jpickle.loads("(dp0\nS'foo'\np1\nS'bar'\np2\ns."), {foo: 'bar'});
         assert.deepEqual(jpickle.loads("(dp0\nS'foo'\np1\nS'bar'\np2\nsS'wiz'\np3\nS'bang'\np4\ns."), {foo: 'bar', wiz: 'bang'});
     });
+
+    it('should handle put / get', function() {
+        // store 1, PUT at 0, store 2, GET at 0
+        assert.strictEqual(jpickle.loads('I1\np0\nI2\ng0\n.'), 1);
+    });
 });
 
 describe('pickle version 1', function() {
@@ -104,7 +109,7 @@ describe('pickle version 1', function() {
         assert.deepEqual(jpickle.loads('}q\x00(U\x03fooq\x01U\x03barq\x02U\x03wizq\x03U\x04bangq\x04u.'), {foo: 'bar', wiz: 'bang'});
     });
 
-    it('should handle binary put / get', function() {
+    it('should handle put / get', function() {
         // store 1, BINPUT at 0, store 2, BINGET at 0
         assert.strictEqual(jpickle.loads('K\x01q\x00K\x02h\x00.'), 1);
 
