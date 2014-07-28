@@ -55,6 +55,11 @@ describe('pickle version 0', function() {
         assert.deepEqual(jpickle.loads("(dp0\nS'foo'\np1\nS'bar'\np2\nsS'wiz'\np3\nS'bang'\np4\ns."), {foo: 'bar', wiz: 'bang'});
     });
 
+    it('should handle pop', function() {
+        // store 1, store 2, POP
+        assert.strictEqual(jpickle.loads('I1\nI2\n0.'), 1);
+    });
+
     it('should handle put / get', function() {
         // store 1, PUT at 0, store 2, GET at 0
         assert.strictEqual(jpickle.loads('I1\np0\nI2\ng0\n.'), 1);
