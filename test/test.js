@@ -103,6 +103,14 @@ describe('pickle version 1', function() {
         assert.deepEqual(jpickle.loads('}q\x00U\x03fooq\x01U\x03barq\x02s.'), {foo: 'bar'});
         assert.deepEqual(jpickle.loads('}q\x00(U\x03fooq\x01U\x03barq\x02U\x03wizq\x03U\x04bangq\x04u.'), {foo: 'bar', wiz: 'bang'});
     });
+
+    it('should handle binary put / get', function() {
+        // store 1, BINPUT at 0, store 2, BINGET at 0
+        assert.strictEqual(jpickle.loads('K\x01q\x00K\x02h\x00.'), 1);
+
+        // store 1, LONG_BINPUT at 0, store 2, LONG_BINGET at 0
+        assert.strictEqual(jpickle.loads('K\x01r\x00\x00\x00\00K\x02j\x00\x00\x00\x00.'), 1);
+    });
 });
 
 describe('pickle version 2', function() {
