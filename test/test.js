@@ -60,6 +60,14 @@ describe('pickle version 0', function() {
         assert.strictEqual(jpickle.loads('I1\nI2\n0.'), 1);
     });
 
+    it('should handle dup', function() {
+        // store 1, DUP
+        assert.strictEqual(jpickle.loads('I1\n2.'), 1);
+
+        // store 1, DUP, POP
+        assert.strictEqual(jpickle.loads('I1\n20.'), 1);
+    });
+
     it('should handle put / get', function() {
         // store 1, PUT at 0, store 2, GET at 0
         assert.strictEqual(jpickle.loads('I1\np0\nI2\ng0\n.'), 1);
