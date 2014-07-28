@@ -60,6 +60,11 @@ describe('pickle version 0', function() {
         assert.strictEqual(jpickle.loads('I1\nI2\n0.'), 1);
     });
 
+    it('should handle pop_mark', function() {
+        // store 1, store 2, MARK, store 3, store 4, POP_MARK
+        assert.strictEqual(jpickle.loads('I1\nI2\n(I3\nI4\n1.'), 2);
+    });
+
     it('should handle dup', function() {
         // store 1, DUP
         assert.strictEqual(jpickle.loads('I1\n2.'), 1);
