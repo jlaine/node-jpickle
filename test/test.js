@@ -2,6 +2,10 @@ var assert = require('assert')
   , jpickle = require('../lib/jpickle');
 
 describe('pickle version 0', function() {
+    it('should decode none', function() {
+        assert.strictEqual(jpickle.loads('N.'), null);
+    });
+
     it('should decode integers', function() {
         assert.strictEqual(jpickle.loads('I1\n.'), 1);
         assert.strictEqual(jpickle.loads('I256\n.'), 256);
@@ -49,6 +53,29 @@ describe('pickle version 0', function() {
         assert.deepEqual(jpickle.loads('(dp0\n.'), {});
         assert.deepEqual(jpickle.loads("(dp0\nS'foo'\np1\nS'bar'\np2\ns."), {foo: 'bar'});
         assert.deepEqual(jpickle.loads("(dp0\nS'foo'\np1\nS'bar'\np2\nsS'wiz'\np3\nS'bang'\np4\ns."), {foo: 'bar', wiz: 'bang'});
+    });
+
+    it('should handle pop', function() {
+        // store 1, store 2, POP
+        assert.strictEqual(jpickle.loads('I1\nI2\n0.'), 1);
+    });
+
+    it('should handle pop_mark', function() {
+        // store 1, store 2, MARK, store 3, store 4, POP_MARK
+        assert.strictEqual(jpickle.loads('I1\nI2\n(I3\nI4\n1.'), 2);
+    });
+
+    it('should handle dup', function() {
+        // store 1, DUP
+        assert.strictEqual(jpickle.loads('I1\n2.'), 1);
+
+        // store 1, DUP, POP
+        assert.strictEqual(jpickle.loads('I1\n20.'), 1);
+    });
+
+    it('should handle put / get', function() {
+        // store 1, PUT at 0, store 2, GET at 0
+        assert.strictEqual(jpickle.loads('I1\np0\nI2\ng0\n.'), 1);
     });
 });
 
@@ -99,6 +126,14 @@ describe('pickle version 1', function() {
         assert.deepEqual(jpickle.loads('}q\x00U\x03fooq\x01U\x03barq\x02s.'), {foo: 'bar'});
         assert.deepEqual(jpickle.loads('}q\x00(U\x03fooq\x01U\x03barq\x02U\x03wizq\x03U\x04bangq\x04u.'), {foo: 'bar', wiz: 'bang'});
     });
+
+    it('should handle put / get', function() {
+        // store 1, BINPUT at 0, store 2, BINGET at 0
+        assert.strictEqual(jpickle.loads('K\x01q\x00K\x02h\x00.'), 1);
+
+        // store 1, LONG_BINPUT at 0, store 2, LONG_BINGET at 0
+        assert.strictEqual(jpickle.loads('K\x01r\x00\x00\x00\00K\x02j\x00\x00\x00\x00.'), 1);
+    });
 });
 
 describe('pickle version 2', function() {
@@ -116,6 +151,7 @@ describe('pickle version 2', function() {
     it('should decode tuples', function() {
         assert.deepEqual(jpickle.loads('\x80\x02).'), []);
         assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00\x85q\x01.'), ['foo']);
+        assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00h\x00\x86q\x01.'), ['foo', 'foo']);
         assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00U\x03barq\x01\x86q\x02.'), ['foo', 'bar']);
         assert.deepEqual(jpickle.loads('\x80\x02U\x03fooq\x00U\x03barq\x01U\x03wizq\x02\x87q\x03.'), ['foo', 'bar', 'wiz']);
         assert.deepEqual(jpickle.loads('\x80\x02(U\x03fooq\x00U\x03barq\x01U\x03wizq\x02U\x04bangq\x03tq\x04.'), ['foo', 'bar', 'wiz', 'bang']);
@@ -140,5 +176,18 @@ describe('pickle version 2', function() {
         assert.strictEqual(date.getUTCMinutes(), 1);
         assert.strictEqual(date.getUTCSeconds(), 52);
         assert.strictEqual(date.getUTCMilliseconds(), 311);
+    });
+});
+
+describe('complex example', function(){
+    it('should decode a complex example', function() {
+      var ltest="(dp1\nS'nick'\np2\nS'testuser'\np3\nsS'friends'\np4\n(lp5\n(dp6\nS'uid'\np7\nI2\nsS'name'\np8\nS'testuser2'\np9\nsa(dp10\ng7\nI3\nsg8\nS'testuser3'\np11\nsasg7\nI1\nsS'groups'\np12\n(lp13\n(dp14\nS'gid'\np15\nI1\nsg8\nS'wonderful group'\np16\nsas.";
+      var lref = {nick: 'testuser',
+            friends: [ { uid: 2, name: 'testuser2' }, { uid: 3, name: 'testuser3' } ],
+            uid: 1,
+            groups: [ { gid: 1, name: 'wonderful group' } ] };
+
+      //JSON.stringify takes care of not caring of the order of object members
+      assert.strictEqual(JSON.stringify(jpickle.loads(ltest)), JSON.stringify(lref));
     });
 });
