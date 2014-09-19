@@ -21,7 +21,7 @@ Usage
 
 Here is a basic example for parsing a pickled string:
 
-```javascript 
+```javascript
 var jpickle = require('jpickle');
 jpickle.loads('U\x0bhello worldq\x01.');
 ```
@@ -35,7 +35,6 @@ with the emulated member then the unpickle will
 fail with an exception.
 
 ### Python
- 
 ```python
 class MyClass:
 def __init__(self):
@@ -43,7 +42,7 @@ def __init__(self):
 ```
 
 ### Node
-```javascript     
+```javascript
 function MyClass() {}
 
 var jpickle = require('jpickle');
@@ -51,16 +50,16 @@ jpickle.emulated['__main__.MyClass'] = MyClass;
 var unpickled = jpickle.loads(pickled);
 // unpickled.data is now "test"
 ```
-   
+
 If the class being unpickled uses inheritance the
 base classes need to be registered also.
 
 ### Python
 ```python
 class MyClass:
-def __init__(self):
-    self.data = "test"
-       
+    def __init__(self):
+        self.data = "test"
+
 class MyOtherClass:
     def __init__(self):
         self.myclass = MyClass()
@@ -74,7 +73,7 @@ class MySubClass(MyOtherClass):
  ```
 
 ### Node
-```javascript     
+```javascript
 function MyClass() {}
 function MyOtherClass() {}
 function MySubClass() {}
@@ -83,13 +82,13 @@ var jpickle = require('jpickle');
 jpickle.emulated['__main__.MyClass'] = MyClass;
 jpickle.emulated['__main__.MyOtherClass'] = MyOtherClass;
 jpickle.emulated['__main__.MySubClass'] = MySubClass;
-          
+
 var unpickled = jpickle.loads(pickled);
 // unpickled.myclasses[0].data is now "new test value"
 // unpickled.subvalue is now "12"
 ```
 
-In cases that more emulation is desired such as member 
+In cases that more emulation is desired such as member
 functions those can be added to the object prototype.
 
 
