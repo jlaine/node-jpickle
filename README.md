@@ -37,8 +37,8 @@ fail with an exception.
 ### Python
 ```python
 class MyClass:
-def __init__(self):
-    self.data = "test"
+    def __init__(self):
+        self.data = "test"
 ```
 
 ### Node
