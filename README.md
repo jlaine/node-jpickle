@@ -52,7 +52,7 @@ var unpickled = jpickle.loads(pickled);
 // unpickled.data is now "test"
 ```
    
-If the class being unpicked uses inheritance the
+If the class being unpickled uses inheritance the
 base classes need to be registered also.
 
 ### Python
