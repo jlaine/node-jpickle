@@ -10,6 +10,7 @@ It currently supports most opcodes for:
  - protocol 0
  - protocol 1
  - protocol 2
+ - protocol 3
 
 Installation
 ------------
